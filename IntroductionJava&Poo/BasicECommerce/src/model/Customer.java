@@ -1,13 +1,12 @@
 package model;
 
-import utils.IdGenerator;
 import utils.ValidationUtils;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Customer {
-    private String id;
+    private Long id;
     private String name;
     private String lastName;
     private LocalDate birthday;
@@ -25,15 +24,18 @@ public class Customer {
      * @param identificationNumber The customer's identification number. Cannot be null.
      * @throws IllegalArgumentException if any required field (name, lastName, email, phone, or identificationNumber) is null.
      */
-    public Customer(String name, String lastName, LocalDate birthday, String email, String phone, String identificationNumber) {
-        if (Objects.isNull(name) || Objects.isNull(lastName) || Objects.isNull(email) || Objects.isNull(phone) || Objects.isNull(identificationNumber)) {
-            throw new IllegalArgumentException("Fields name, lastName, email, phone and identificationNumber are required.");
-        }
-        if (!ValidationUtils.isValidEmail(email)) {
-            throw new IllegalArgumentException("Invalid email address.");
-        }
+    public Customer(Long id, String name, String lastName, LocalDate birthday, String email, String phone, String identificationNumber) {
+        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id is required.");
+        if (Objects.isNull(name)) throw new IllegalArgumentException("Field name is required.");
+        if (Objects.isNull(lastName)) throw new IllegalArgumentException("Field lastName is required.");
+        if (Objects.isNull(email)) throw new IllegalArgumentException("Field email is required.");
+        if (!ValidationUtils.isValidEmail(email)) throw new IllegalArgumentException("Invalid email address.");
+        if (Objects.isNull(phone)) throw new IllegalArgumentException("Field phone is required.");
+        if (Objects.isNull(identificationNumber))
+            throw new IllegalArgumentException("Field identificationNumber is required.");
 
-        this.id = IdGenerator.generateId();
+
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -42,7 +44,7 @@ public class Customer {
         this.identificationNumber = identificationNumber;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

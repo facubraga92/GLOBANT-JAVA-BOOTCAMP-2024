@@ -1,12 +1,11 @@
 package model;
 
-import utils.IdGenerator;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ShoppingCartItem {
-    private String id;
+    private Long id;
     private Product product;
     private int quantity;
 
@@ -16,20 +15,17 @@ public class ShoppingCartItem {
      * @param quantity The quantity of the product. Must be greater than 0.
      * @throws IllegalArgumentException if product is null or quantity is less than 1.
      */
-    public ShoppingCartItem(Product product, int quantity) {
-        if (Objects.isNull(product)) {
-            throw new IllegalArgumentException("Product cannot be null.");
-        }
-        if (quantity < 1) {
-            throw new IllegalArgumentException("Quantity must be greater than 0.");
-        }
+    public ShoppingCartItem(Long id, Product product, int quantity) {
+        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id are required.");
+        if (Objects.isNull(product)) throw new IllegalArgumentException("Product cannot be null.");
+        if (quantity < 1) throw new IllegalArgumentException("Quantity must be greater than 0.");
 
-        this.id = IdGenerator.generateId();
+        this.id = id;
         this.product = product;
         this.quantity = quantity;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -58,7 +54,7 @@ public class ShoppingCartItem {
      * Calculates the total price for this shopping cart item.
      *
      * @return The total price (price of the product multiplied by the quantity).
-     *
+     * <p>
      * "Don't talk to strangers" (Unique Responsibility) example method:
      */
     public BigDecimal getTotalPrice() {

@@ -1,13 +1,12 @@
 package model;
 
-import utils.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ShoppingCart {
-    private String id;
+    private Long id;
     private Customer customer;
     private ShoppingCartStatus shoppingCartStatus;
     private List<ShoppingCartItem> shoppingCartItemList;
@@ -18,18 +17,17 @@ public class ShoppingCart {
      * @param shoppingCartItemList The list of items in the shopping cart. Can be null, in which case an empty list is used.
      * @throws IllegalArgumentException if customer is null.
      */
-    public ShoppingCart(Customer customer, List<ShoppingCartItem> shoppingCartItemList) {
-        if (Objects.isNull(customer)) {
-            throw new IllegalArgumentException("Field customer is required.");
-        }
+    public ShoppingCart(Long id, Customer customer, List<ShoppingCartItem> shoppingCartItemList) {
+        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id are required.");
+        if (Objects.isNull(customer)) throw new IllegalArgumentException("Field customer is required.");
 
-        this.id = IdGenerator.generateId();
+        this.id = id;
         this.customer = customer;
         this.shoppingCartStatus = ShoppingCartStatus.DRAFT;
         this.shoppingCartItemList = Objects.isNull(shoppingCartItemList) ? new ArrayList<>() : shoppingCartItemList;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

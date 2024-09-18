@@ -1,12 +1,10 @@
 package model;
 
-import utils.IdGenerator;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
-    private String id;
+    private Long id;
     private String name;
     private String description;
     private BigDecimal price;
@@ -21,22 +19,24 @@ public class Product {
      * @throws IllegalArgumentException if any required field (name, description, price, or productType) is null,
      *                                  or if the price is less than or equal to zero.
      */
-    public Product(String name, String description, BigDecimal price, ProductType productType) {
-        if (Objects.isNull(name) || Objects.isNull(description) || Objects.isNull(price) || Objects.isNull(productType)) {
-            throw new IllegalArgumentException("Fields name, description, price, and productType are required.");
-        }
-        if (price.compareTo(BigDecimal.ZERO) <= 0) {
+    public Product(Long id, String name, String description, BigDecimal price, ProductType productType) {
+        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id is required.");
+        if (Objects.isNull(name)) throw new IllegalArgumentException("Field name is required.");
+        if (Objects.isNull(description)) throw new IllegalArgumentException("Field description is required.");
+        if (Objects.isNull(price)) throw new IllegalArgumentException("Field price is required.");
+        if (price.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException("Price must be greater than zero.");
-        }
+        if (Objects.isNull(productType)) throw new IllegalArgumentException("Field productType is required.");
 
-        this.id = IdGenerator.generateId();
+
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.productType = productType;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
