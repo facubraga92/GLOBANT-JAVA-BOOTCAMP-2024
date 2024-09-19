@@ -1,5 +1,7 @@
 package model;
 
+import utils.ValidationContext;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -9,6 +11,8 @@ public class Product {
     private String description;
     private BigDecimal price;
     private ProductType productType;
+    //Strategy design pattern for validations.
+    private ValidationContext validationContext = ValidationContext.getInstance();
 
 
     /**
@@ -20,14 +24,11 @@ public class Product {
      *                                  or if the price is less than or equal to zero.
      */
     public Product(Long id, String name, String description, BigDecimal price, ProductType productType) {
-        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id is required.");
-        if (Objects.isNull(name)) throw new IllegalArgumentException("Field name is required.");
-        if (Objects.isNull(description)) throw new IllegalArgumentException("Field description is required.");
-        if (Objects.isNull(price)) throw new IllegalArgumentException("Field price is required.");
-        if (price.compareTo(BigDecimal.ZERO) <= 0)
-            throw new IllegalArgumentException("Price must be greater than zero.");
-        if (Objects.isNull(productType)) throw new IllegalArgumentException("Field productType is required.");
-
+        validationContext.validate("id", id);
+        validationContext.validate("name", name);
+        validationContext.validate("description", description);
+        validationContext.validate("price", price);
+        validationContext.validate("productType", productType);
 
         this.id = id;
         this.name = name;

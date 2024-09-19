@@ -1,6 +1,8 @@
 package model;
 
 
+import utils.ValidationContext;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +12,7 @@ public class ShoppingCart {
     private Customer customer;
     private ShoppingCartStatus shoppingCartStatus;
     private List<ShoppingCartItem> shoppingCartItemList;
+    private ValidationContext validationContext = ValidationContext.getInstance();
 
 
     /**
@@ -18,8 +21,8 @@ public class ShoppingCart {
      * @throws IllegalArgumentException if customer is null.
      */
     public ShoppingCart(Long id, Customer customer, List<ShoppingCartItem> shoppingCartItemList) {
-        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id are required.");
-        if (Objects.isNull(customer)) throw new IllegalArgumentException("Field customer is required.");
+        validationContext.validate("id", id);
+        validationContext.validate("customer", customer);
 
         this.id = id;
         this.customer = customer;

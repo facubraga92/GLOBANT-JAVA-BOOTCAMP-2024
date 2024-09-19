@@ -1,6 +1,8 @@
 package model;
 
 
+import utils.ValidationContext;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ public class ShoppingCartItem {
     private Long id;
     private Product product;
     private int quantity;
-
+    private ValidationContext validationContext = ValidationContext.getInstance();
 
     /**
      * @param product  The product associated with this item. Cannot be null.
@@ -16,9 +18,9 @@ public class ShoppingCartItem {
      * @throws IllegalArgumentException if product is null or quantity is less than 1.
      */
     public ShoppingCartItem(Long id, Product product, int quantity) {
-        if (Objects.isNull(id)) throw new IllegalArgumentException("Field id are required.");
-        if (Objects.isNull(product)) throw new IllegalArgumentException("Product cannot be null.");
-        if (quantity < 1) throw new IllegalArgumentException("Quantity must be greater than 0.");
+        validationContext.validate("id", id);
+        validationContext.validate("product", product);
+        validationContext.validate("quantity", quantity);
 
         this.id = id;
         this.product = product;
